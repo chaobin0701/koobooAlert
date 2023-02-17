@@ -2,7 +2,7 @@ import request from "@/utils/request";
 // 查询文件
 export function getFile(params) {
   return request({
-    url: "http://test.chaobin-gz.sitepapa.com/api/file",
+    url: "api/file",
     method: "get",
     params,
   });
@@ -11,40 +11,44 @@ export function getFile(params) {
 // 上传文件
 export function fileUpload(data) {
   return request({
-    url: "http://test.chaobin-gz.sitepapa.com/api/file",
+    url: "api/file",
     method: "post",
     data,
   });
 }
 // 删除文件
-export function deleteFile(data) {
+export function deleteFile(deleteFile) {
   return request({
-    url: "http://test.chaobin-gz.sitepapa.com/api/file",
+    url: "api/file",
     method: "delete",
-    data,
+    data: {
+      deleteFile,
+    },
   });
 }
 
 // 创建文件夹
 export function createFolder(data) {
   return request({
-    url: "http://test.chaobin-gz.sitepapa.com/api/folder",
+    url: "api/folder",
     method: "post",
     data,
   });
 }
 // 删除文件夹
-export function deleteFolder(data) {
+export function deleteFolder(deleteFolder) {
   return request({
-    url: "http://test.chaobin-gz.sitepapa.com/api/file",
+    url: "api/folder",
     method: "delete",
-    data,
+    data: {
+      deleteFolder,
+    },
   });
 }
 // 查询文件夹
 export function getFolders(params) {
   return request({
-    url: "http://test.chaobin-gz.sitepapa.com/api/folder",
+    url: "api/folder",
     method: "get",
     params,
   });
