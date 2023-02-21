@@ -46,6 +46,7 @@
         label-position="right"
         label-width="80px"
         :model="formLabelAlign"
+        class="grid grid-cols-2"
       >
         <el-form-item label="代办事项">
           <el-input type="textarea" v-model="formLabelAlign.message"></el-input>

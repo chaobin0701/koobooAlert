@@ -55,7 +55,68 @@ export const constantRoutes = [
       },
     ],
   },
+  {
+    path: "/staffManagement",
+    component: Layout,
+    children: [
+      {
+        path: "staffManagement",
+        name: "staffManagement",
+        component: () => import("@/views/staffManagement/index"),
+        meta: { title: "员工管理", icon: "form" },
+      },
+    ],
+  },
+  {
+    path: "/personnelManagement",
+    component: Layout,
+    meta: { title: "入离职管理", icon: "form" },
+    children: [
+      {
+        path: "Induction",
+        name: "Induction",
+        component: () => import("@/views/personnelManagement/Induction"),
+        meta: { title: "入职", icon: "form" },
+      },
+      {
+        path: "depart",
+        name: "depart",
+        component: () => import("@/views/personnelManagement/depart"),
+        meta: { title: "离职", icon: "form" },
+      },
+      {
+        path: "regular",
+        name: "regular",
+        component: () => import("@/views/personnelManagement/regular"),
+        meta: { title: "转正", icon: "form" },
+      },
+    ],
+  },
+  {
+    path: "/department",
+    component: Layout,
+    children: [
+      {
+        path: "department",
+        name: "department",
+        component: () => import("@/views/department"),
+        meta: { title: "部门管理", icon: "form" },
+      },
+    ],
+  },
 
+  {
+    path: "/personnelApproval",
+    component: Layout,
+    children: [
+      {
+        path: "personnelApproval",
+        name: "personnelApproval",
+        component: () => import("@/views/personnelApproval"),
+        meta: { title: "入离职审批", icon: "form" },
+      },
+    ],
+  },
   // 404 page must be placed at the end !!!
   { path: "*", redirect: "/404", hidden: true },
 ];

@@ -194,6 +194,7 @@ export default {
       let param = new FormData();
       param.append("files", file);
       param.append("folder", this.folderLast);
+      console.log(`output->param`,param)
       await fileUpload(param);
       await this.toUpdateFile(this.folderLast);
       this.handleClose();
