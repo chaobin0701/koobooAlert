@@ -25,21 +25,9 @@ export const constantRoutes = [
     children: [
       {
         path: "dashboard",
-        name: "Dashboard",
+        name: "主页",
         component: () => import("@/views/dashboard/index"),
-        meta: { title: "Dashboard", icon: "dashboard" },
-      },
-    ],
-  },
-  {
-    path: "/todolist",
-    component: Layout,
-    children: [
-      {
-        path: "todolist",
-        name: "todolist",
-        component: () => import("@/views/todolist/index"),
-        meta: { title: "代办事项", icon: "form" },
+        meta: { title: "主页", icon: "dashboard" },
       },
     ],
   },
@@ -56,27 +44,27 @@ export const constantRoutes = [
     ],
   },
   {
-    path: "/staffManagement",
+    path: "/staff",
     component: Layout,
     children: [
       {
-        path: "staffManagement",
-        name: "staffManagement",
-        component: () => import("@/views/staffManagement/index"),
-        meta: { title: "员工管理", icon: "form" },
+        path: "staff",
+        name: "staff",
+        component: () => import("@/views/staff/index"),
+        meta: { title: "员工管理", icon: "user" },
       },
     ],
   },
   {
     path: "/personnelManagement",
     component: Layout,
-    meta: { title: "入离职管理", icon: "form" },
+    meta: { title: "入离职管理", icon: "ruzhiguanli" },
     children: [
       {
-        path: "Induction",
-        name: "Induction",
-        component: () => import("@/views/personnelManagement/Induction"),
-        meta: { title: "入职", icon: "form" },
+        path: "entry",
+        name: "entry",
+        component: () => import("@/views/personnelManagement/entry"),
+        meta: { title: "入职", icon: "rulizhibanli" },
       },
       {
         path: "depart",
@@ -88,7 +76,7 @@ export const constantRoutes = [
         path: "regular",
         name: "regular",
         component: () => import("@/views/personnelManagement/regular"),
-        meta: { title: "转正", icon: "form" },
+        meta: { title: "转正", icon: "zhuanzhengshenqing" },
       },
     ],
   },
@@ -100,7 +88,7 @@ export const constantRoutes = [
         path: "department",
         name: "department",
         component: () => import("@/views/department"),
-        meta: { title: "部门管理", icon: "form" },
+        meta: { title: "部门管理", icon: "zuzhibumen" },
       },
     ],
   },
@@ -113,7 +101,7 @@ export const constantRoutes = [
         path: "personnelApproval",
         name: "personnelApproval",
         component: () => import("@/views/personnelApproval"),
-        meta: { title: "入离职审批", icon: "form" },
+        meta: { title: "入离职审批", icon: "shenpi" },
       },
     ],
   },

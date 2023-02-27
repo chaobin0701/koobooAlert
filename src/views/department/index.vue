@@ -10,9 +10,16 @@
       >
     </div>
     <!-- 表格数据 -->
-    <el-table :data="tableData" style="width: 100%" border>
-      <el-table-column prop="departmentName" label="部门" width="250px"> </el-table-column>
+    <el-table :data="tableData" border stripe>
+      <el-table-column prop="departmentName" label="部门" width="250px">
+      </el-table-column>
       <el-table-column prop="departmentManager" label="部门经理" width="250px">
+      </el-table-column>
+      <el-table-column label="操作" width="250px">
+        <template
+          ><el-button size="mini" type="danger">删除</el-button>
+          <el-button size="mini" type="primary">编辑</el-button>
+        </template>
       </el-table-column>
     </el-table>
     <!-- 表单 -->
@@ -47,7 +54,12 @@
 </template>
 
 <script>
-import { getAllDepartment, createDepartment } from "@/api/department";
+import {
+  getAllDepartment,
+  createDepartment,
+  removeStaffOne,
+  updateStaffOne,
+} from "@/api/department";
 export default {
   data: () => {
     return {
