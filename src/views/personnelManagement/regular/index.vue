@@ -1,66 +1,116 @@
 <template>
-  <div>
-    <div class="header p-3 shadow-md">
+  <div class="p-3">
+    <div class="header pb-2 pt-2 shadow-md">
       <el-button size="mini" type="primary" icon="el-icon-plus"
         >发起转正</el-button
       >
+      <el-button size="mini" icon="el-icon-finished">批量操作</el-button>
+      <el-button size="mini" icon="el-icon-upload2">导出</el-button>
+      <el-button size="mini" icon="el-icon-printer">打印</el-button>
+      <el-button size="mini" icon="el-icon-more">更多操作</el-button>
     </div>
     <!-- 表格 -->
     <el-table :data="tableData" style="width: 100%" border>
-      <el-table-column prop="name" label="名称" width="150"></el-table-column>
-      <el-table-column
-        prop="name"
-        label="转正员工"
-        width="150"
-      ></el-table-column>
-      <el-table-column prop="name" label="岗位" width="150"></el-table-column>
-      <el-table-column prop="name" label="部门" width="150"></el-table-column>
-      <el-table-column
-        prop="name"
-        label="部门经理"
-        width="150"
-      ></el-table-column>
-      <el-table-column prop="name" label="工号" width="150"></el-table-column>
-      <el-table-column
-        prop="name"
-        label="入职日期"
-        width="150"
-      ></el-table-column>
-      <el-table-column
-        prop="name"
-        label="流程状态"
-        width="150"
-      ></el-table-column>
-      <el-table-column prop="name" label="性别" width="150"></el-table-column>
-      <el-table-column prop="name" label="手机" width="150"></el-table-column>
-      <el-table-column prop="name" label="籍贯" width="150"></el-table-column>
-      <el-table-column prop="name" label="民族" width="150"></el-table-column>
-      <el-table-column
-        prop="name"
-        label="身份证号"
-        width="150"
-      ></el-table-column>
-      <el-table-column
-        prop="name"
-        label="出生日期"
-        width="150"
-      ></el-table-column>
-      <el-table-column prop="name" label="学历" width="150"></el-table-column>
-      <el-table-column
-        prop="name"
-        label="毕业院校"
-        width="150"
-      ></el-table-column>
-      <el-table-column
-        prop="name"
-        label="所学专业"
-        width="150"
-      ></el-table-column>
-      <el-table-column
-        prop="name"
-        label="转正日期"
-        width="150"
-      ></el-table-column>
+      <el-table-column prop="name" width="150">
+        <template slot="header">
+          <i class="el-icon-s-order"></i>
+          名称
+        </template>
+      </el-table-column>
+      <el-table-column prop="name" width="150">
+        <template slot="header">
+          <i class="el-icon-user-solid"></i>
+          转正员工
+        </template></el-table-column
+      >
+      <el-table-column prop="name" width="150">
+        <template slot="header">
+          <i class="el-icon-s-cooperation"></i>
+          岗位
+        </template>
+      </el-table-column>
+      <el-table-column prop="name" width="150">
+        <template slot="header">
+          <i class="el-icon-house"></i>
+          部门
+        </template>
+      </el-table-column>
+      <el-table-column prop="name" width="150">
+        <template slot="header">
+          <i class="el-icon-s-custom"></i>
+          部门经理
+        </template></el-table-column
+      >
+      <el-table-column prop="name" width="150">
+        <template slot="header">
+          <i class="el-icon-date"></i>
+          入职时间
+        </template></el-table-column
+      >
+      <el-table-column prop="name" width="150">
+        <template slot="header">
+          <i class="el-icon-success"></i>
+          流程状态
+        </template></el-table-column
+      >
+      <el-table-column prop="name" width="150">
+        <template slot="header">
+          <i class="el-icon-user-solid"></i>
+          性别
+        </template>
+      </el-table-column>
+      <el-table-column prop="name" width="150">
+        <template slot="header">
+          <i class="el-icon-phone"></i>
+          手机
+        </template>
+      </el-table-column>
+      <el-table-column prop="name" width="150">
+        <template slot="header">
+          <i class="el-icon-s-promotion"></i>
+          籍贯
+        </template>
+      </el-table-column>
+      <el-table-column prop="name" width="150">
+        <template slot="header">
+          <i class="el-icon-s-release"></i>
+          民族
+        </template>
+      </el-table-column>
+      <el-table-column prop="name" width="150">
+        <template slot="header">
+          <i class="el-icon-s-release"></i>
+          身份证号
+        </template></el-table-column
+      >
+      <el-table-column prop="name" width="150">
+        <template slot="header">
+          <i class="el-icon-date"></i> 出生日期
+        </template>
+      </el-table-column>
+      <el-table-column prop="name" width="150">
+        <template slot="header">
+          <i class="el-icon-success"></i>
+          学历
+        </template>
+      </el-table-column>
+      <el-table-column prop="name" width="150">
+        <template slot="header">
+          <i class="el-icon-school"></i>
+          毕业院校
+        </template></el-table-column
+      >
+      <el-table-column prop="name" width="150">
+        <template slot="header">
+          <i class="el-icon-s-cooperation"></i>所学专业
+        </template></el-table-column
+      >
+      <el-table-column prop="name" width="150">
+        <template slot="header">
+          <i class="el-icon-date"></i>
+          转正日期
+        </template></el-table-column
+      >
       <el-table-column label="操作" width="150" fixed="right">
         <template
           ><el-button size="mini" type="primary">查看详情</el-button></template
@@ -105,7 +155,7 @@ export default {
           nativePlace: "",
           nation: "",
           idCard: "",
-          brithday: "",
+          birthday: "",
           education: "",
           graduationSchool: "",
           major: "",
@@ -125,7 +175,7 @@ export default {
           nativePlace: "",
           nation: "",
           idCard: "",
-          brithday: "",
+          birthday: "",
           education: "",
           graduationSchool: "",
           major: "",

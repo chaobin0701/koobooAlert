@@ -8,7 +8,6 @@
           size="mini"
           @click="back"
         ></el-button>
-        <!-- <el-button icon="el-icon-arrow-right" size="mini"></el-button> -->
         <div
           v-for="(url, index) in folder"
           @click="jumpFolder(index)"
@@ -31,18 +30,21 @@
     <el-divider></el-divider>
     <!-- 文件展示  -->
     <el-table :data="allFile" style="width: 100%">
-      <el-table-column label="文件名" width="180">
+      <el-table-column label="文件名" width="280">
         <template slot-scope="scope">
           <a
             v-if="scope.row.fileType === '文件夹'"
             @click="toFolder(scope.row.Name)"
           >
-            <i class="el-icon-folder-opened"></i>
-            {{ scope.row.Name }}
+            <el-tag type="warning">
+              <i class="el-icon-folder-opened"></i> {{ scope.row.Name }}
+            </el-tag>
           </a>
           <a :href="scope.row.AbsoluteUrl" target="_blank" v-else>
-            <i class="el-icon-tickets"></i>
-            {{ scope.row.Name }}
+            <el-tag>
+              <i class="el-icon-tickets"></i>
+              {{ scope.row.Name }}
+            </el-tag>
           </a>
         </template>
       </el-table-column>
@@ -194,7 +196,7 @@ export default {
       let param = new FormData();
       param.append("files", file);
       param.append("folder", this.folderLast);
-      console.log(`output->param`,param)
+      console.log(`output->param`, param);
       await fileUpload(param);
       await this.toUpdateFile(this.folderLast);
       this.handleClose();

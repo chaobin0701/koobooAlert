@@ -1,10 +1,13 @@
 <template>
-  <el-dialog
-    :title="dislogModel === 'edit' ? '修改信息' : '发起入职'"
-    :visible="dialogVisible"
-    width="50%"
-    :before-close="handleClose"
-  >
+  <el-dialog :visible="dialogVisible" :before-close="handleClose">
+    <!-- 标题 -->
+    <template slot="title">
+      <h3 class="text-xl font-bold" v-if="dislogModel !== 'edit'">
+        创建入职流程
+      </h3>
+      <h3 class="text-xl font-bold" v-else>修改信息</h3>
+    </template>
+    <!-- 表单 -->
     <el-form
       ref="form"
       :model="form"
@@ -12,12 +15,15 @@
       :rules="rules"
       class="grid grid-cols-2"
     >
+      <div class="col-span-2 pb-2 pt-2 border-b mb-2">
+        <h3 class="text-l pl-3 font-bold text-blue-400">入职信息</h3>
+      </div>
       <el-form-item label="员工姓名" prop="name" class="col-span-2">
         <el-input v-model="form.name"></el-input>
       </el-form-item>
 
       <el-form-item label="入职部门" prop="departmentId">
-        <el-select v-model="form.departmentId">
+        <el-select v-model="form.departmentId" class="w-full">
           <el-option
             :label="item.departmentName"
             :value="item._id"
@@ -44,23 +50,22 @@
         >
       </el-form-item>
 
-      <el-form-item class="col-span-2">
-        <div>入职资料</div>
+      <el-form-item class="col-span-2" label="入职资料">
         <el-upload
-          class="upload-demo"
-          ref="upload"
-          action=""
-          :file-list="fileList"
-          :auto-upload="false"
-          :http-request="fileUpload"
+          action="http://test.chaobin-gz.sitepapa.com/api/file"
+          :on-remove="handleRemove"
+          :on-success="uploadSuccess"
+          multiple
+          :file-list="form.entryFile"
         >
-          <el-button slot="trigger" size="small" type="primary"
-            >选取文件</el-button
-          >
+          <el-button size="small" type="primary">点击上传</el-button>
         </el-upload>
       </el-form-item>
+      <div class="col-span-2 pb-2 pt-2 border-b mb-2">
+        <h3 class="text-l pl-3 font-bold text-green-400">员工信息</h3>
+      </div>
       <el-form-item label="性别">
-        <el-select v-model="form.gender">
+        <el-select v-model="form.gender" class="w-full">
           <el-option :label="'男'" value="男"></el-option>
           <el-option :label="'女'" value="女"></el-option>
         </el-select>
@@ -79,9 +84,9 @@
         <el-input type="text" v-model="form.idCard"></el-input>
       </el-form-item>
 
-      <el-form-item label="出生日期">
+      <el-form-item label="出生日期" prop="birthday">
         <el-date-picker
-          v-model="form.brithday"
+          v-model="form.birthday"
           type="date"
           placeholder="选择日期"
         >
@@ -97,14 +102,14 @@
       <el-form-item label="所学专业">
         <el-input type="text" v-model="form.major"></el-input>
       </el-form-item>
-
-      <el-form-item>
-        <el-button type="primary" @click="createentry('form')">{{
-          dislogModel === "edit" ? "修改" : "创建"
-        }}</el-button>
-        <el-button @click="handleClose">取消</el-button>
-      </el-form-item></el-form
-    >
+    </el-form>
+    <!-- 底部 -->
+    <template slot="footer">
+      <el-button type="primary" @click="createEntry">{{
+        dislogModel === "edit" ? "修改" : "创建"
+      }}</el-button>
+      <el-button @click="handleClose">取消</el-button>
+    </template>
   </el-dialog>
 </template>
 
@@ -115,11 +120,11 @@ export default {
     return {
       rules: {
         name: [{ required: true, message: "请输入名字", trigger: "blur" }],
-        department: [
+        departmentId: [
           { required: true, message: "请输入部门", trigger: "blur" },
         ],
-        station: [{ required: true, message: "请输入岗位", trigger: "blur" }],
-        deteEmployment: [
+        position: [{ required: true, message: "请输入岗位", trigger: "blur" }],
+        entryDate: [
           { required: true, message: "输入入职日期", trigger: "blur" },
         ],
         probation: [
@@ -136,19 +141,28 @@ export default {
     dialogVisible: Boolean,
   },
   methods: {
-    createentry(formName) {
-      this.$refs[formName].validate(async (valid) => {
-        if (valid) {
-          await this.$refs.upload.submit();
-          this.$emit("createentry");
-        }
-      });
+    // 创建入职信息
+    createEntry() {
+      this.$emit("createEntry");
     },
+    // 关闭弹窗
     handleClose() {
       this.$emit("handleClose");
     },
-    fileUpload(data) {
-      this.$emit("fileUpload", data);
+    // 文件上传成功的狗子
+    uploadSuccess(file, fileList) {
+      if (!this.form.entryFile) {
+        this.form.entryFile = [];
+      }
+      this.form.entryFile.push({
+        name: fileList.name,
+        size: fileList.size,
+        status: fileList.status,
+        uid: fileList.uid,
+      });
+    },
+    handleRemove(file, fileList) {
+      this.form.entryFile = fileList;
     },
   },
   async created() {
@@ -157,4 +171,28 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.el-dialog__header {
+  @apply bg-white border-b;
+}
+.el-dialog {
+  @apply rounded-l bg-gray-100 overflow-hidden;
+}
+.el-form-item {
+  @apply mb-3;
+}
+.el-form-item > label,
+.el-form-item > .el-form-item__content {
+  @apply pb-1 pt-1;
+}
+.el-date-editor.el-input {
+  @apply w-full;
+}
+.el-dialog__footer {
+  @apply bg-white pb-2 pt-2 pr-3 pl-3;
+}
+
+.el-dialog__body {
+  @apply pt-0 pb-0;
+}
+</style>

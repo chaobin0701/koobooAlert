@@ -1,24 +1,43 @@
 <template>
-  <div>
-    <div class="header p-3 shadow-md">
+  <div class="p-3">
+    <!-- 功能区 -->
+    <div class="header pb-2 pt-2 shadow-md">
       <el-button
         size="mini"
         type="primary"
         icon="el-icon-plus"
         @click="createDep"
-        >新建</el-button
+        >新建部门</el-button
       >
+      <el-button size="mini" icon="el-icon-finished">批量操作</el-button>
+      <el-button size="mini" icon="el-icon-upload2">导出</el-button>
+      <el-button size="mini" icon="el-icon-printer">打印</el-button>
+      <el-button size="mini" icon="el-icon-more">更多操作</el-button>
     </div>
     <!-- 表格数据 -->
     <el-table :data="tableData" border stripe>
-      <el-table-column prop="departmentName" label="部门" width="250px">
+      <el-table-column prop="departmentName" width="250px">
+        <template slot="header">
+          <i class="el-icon-house"></i>
+          部门
+        </template>
+        <template slot-scope="{ row }">
+          <el-tag type="info">{{ row.departmentName }}</el-tag>
+        </template>
       </el-table-column>
-      <el-table-column prop="departmentManager" label="部门经理" width="250px">
+      <el-table-column prop="departmentManager" width="250px">
+        <template slot="header">
+          <i class="el-icon-s-custom"></i>
+          部门经理
+        </template>
+        <template slot-scope="{ row }">
+          <el-tag>{{ row.departmentManager }}</el-tag>
+        </template>
       </el-table-column>
       <el-table-column label="操作" width="250px">
-        <template
-          ><el-button size="mini" type="danger">删除</el-button>
-          <el-button size="mini" type="primary">编辑</el-button>
+        <template>
+          <el-button size="mini" type="primary">查看详情</el-button>
+          <el-button size="mini" type="danger">删除</el-button>
         </template>
       </el-table-column>
     </el-table>

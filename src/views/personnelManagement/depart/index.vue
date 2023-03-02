@@ -1,62 +1,76 @@
 <template>
-  <div>
-    <div class="header p-3 shadow-md">
+  <div class="p-3">
+    <div class="header pt-3 pb-3 shadow-md">
       <el-button size="mini" type="primary" icon="el-icon-plus"
         >发起离职</el-button
       >
+      <el-button size="mini" icon="el-icon-finished">批量操作</el-button>
+      <el-button size="mini" icon="el-icon-upload2">导出</el-button>
+      <el-button size="mini" icon="el-icon-printer">打印</el-button>
+      <el-button size="mini" icon="el-icon-more">更多操作</el-button>
     </div>
     <!-- 表格 -->
     <el-table :data="tableData" style="width: 100%" border>
-      <el-table-column
-        prop="departIllustrate"
-        label="离职申请记录"
-        width="150"
-      ></el-table-column>
-      <el-table-column
-        prop="departIllustrate"
-        label="岗位"
-        width="150"
-      ></el-table-column>
-      <el-table-column
-        prop="departIllustrate"
-        label="部门"
-        width="150"
-      ></el-table-column>
-      <el-table-column
-        prop="departIllustrate"
-        label="入职时间"
-        width="150"
-      ></el-table-column>
-      <el-table-column
-        prop="departIllustrate"
-        label="流程状态"
-        width="150"
-      ></el-table-column>
-      <el-table-column
-        prop="departIllustrate"
-        label="离职材料"
-        width="150"
-      ></el-table-column>
-      <el-table-column
-        prop="departIllustrate"
-        label="离职员工"
-        width="150"
-      ></el-table-column>
-      <el-table-column
-        prop="departIllustrate"
-        label="离职日期"
-        width="150"
-      ></el-table-column>
-      <el-table-column
-        prop="departIllustrate"
-        label="发起日期"
-        width="150"
-      ></el-table-column>
-      <el-table-column
-        prop="departIllustrate"
-        label="离职原因"
-        width="150"
-      ></el-table-column>
+      <el-table-column prop="departIllustrate" width="150">
+        <template slot="header">
+          <i class="el-icon-s-order"></i>
+          离职申请记录
+        </template></el-table-column
+      >
+      <el-table-column prop="departIllustrate" width="150">
+        <template slot="header">
+          <i class="el-icon-s-cooperation"></i>
+          岗位
+        </template>
+      </el-table-column>
+      <el-table-column prop="departIllustrate" width="150">
+        <template slot="header">
+          <i class="el-icon-house"></i>
+          部门
+        </template></el-table-column
+      >
+      <el-table-column prop="departIllustrate" width="150">
+        <template slot="header">
+          <i class="el-icon-date"></i>
+          入职时间
+        </template></el-table-column
+      >
+      <el-table-column prop="departIllustrate" width="150">
+        <template slot="header">
+          <i class="el-icon-success"></i>
+          流程状态
+        </template></el-table-column
+      >
+      <el-table-column prop="departIllustrate" width="150">
+        <template slot="header">
+          <i class="el-icon-files"></i>
+          离职材料
+        </template></el-table-column
+      >
+      <el-table-column prop="departIllustrate" width="150">
+        <template slot="header">
+          <i class="el-icon-user-solid"></i>
+          离职员工
+        </template></el-table-column
+      >
+      <el-table-column prop="departIllustrate" label="离职日期" width="150">
+        <template slot="header">
+          <i class="el-icon-user-solid"></i>
+          员工姓名
+        </template></el-table-column
+      >
+      <el-table-column prop="departIllustrate" width="150">
+        <template slot="header">
+          <i class="el-icon-date"></i>
+          发起日期
+        </template></el-table-column
+      >
+      <el-table-column prop="departIllustrate" width="150">
+        <template slot="header">
+          <i class="el-icon-info"></i>
+          离职原因
+        </template></el-table-column
+      >
       <el-table-column label="操作" width="150" fixed="right">
         <template
           ><el-button size="mini" type="primary">查看详情</el-button></template
@@ -102,18 +116,6 @@ export default {
       tableData: [
         {
           departIllustrate: "1",
-          station: "",
-          department: "",
-          dateEmployment: "",
-          processState: "",
-          departFile: "",
-          departStaff: "",
-          departDate: "",
-          launchDate: "",
-          departCause: "",
-        },
-        {
-          departIllustrate: "2",
           station: "",
           department: "",
           dateEmployment: "",

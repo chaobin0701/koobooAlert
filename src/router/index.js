@@ -11,13 +11,23 @@ export const constantRoutes = [
     component: () => import("@/views/login/index"),
     hidden: true,
   },
-
   {
     path: "/404",
     component: () => import("@/views/404"),
     hidden: true,
   },
-
+  {
+    path: "/personnelApproval",
+    component: Layout,
+    children: [
+      {
+        path: "personnelApproval",
+        name: "personnelApproval",
+        component: () => import("@/views/personnelApproval"),
+        meta: { title: "入离职审批", icon: "shenpi" },
+      },
+    ],
+  },
   {
     path: "/",
     component: Layout,
@@ -25,33 +35,21 @@ export const constantRoutes = [
     children: [
       {
         path: "dashboard",
-        name: "主页",
+        name: "员工看板",
         component: () => import("@/views/dashboard/index"),
-        meta: { title: "主页", icon: "dashboard" },
+        meta: { title: "员工看板", icon: "dashboard" },
       },
     ],
   },
   {
-    path: "/fileSystem",
+    path: "/department",
     component: Layout,
     children: [
       {
-        path: "fileSystem",
-        name: "fileSystem",
-        component: () => import("@/views/fileSystem/index"),
-        meta: { title: "文件系统", icon: "form" },
-      },
-    ],
-  },
-  {
-    path: "/staff",
-    component: Layout,
-    children: [
-      {
-        path: "staff",
-        name: "staff",
-        component: () => import("@/views/staff/index"),
-        meta: { title: "员工管理", icon: "user" },
+        path: "department",
+        name: "department",
+        component: () => import("@/views/department"),
+        meta: { title: "部门管理", icon: "zuzhibumen" },
       },
     ],
   },
@@ -80,28 +78,28 @@ export const constantRoutes = [
       },
     ],
   },
+
   {
-    path: "/department",
+    path: "/staff",
     component: Layout,
     children: [
       {
-        path: "department",
-        name: "department",
-        component: () => import("@/views/department"),
-        meta: { title: "部门管理", icon: "zuzhibumen" },
+        path: "staff",
+        name: "staff",
+        component: () => import("@/views/staff/index"),
+        meta: { title: "员工管理", icon: "user" },
       },
     ],
   },
-
   {
-    path: "/personnelApproval",
+    path: "/fileSystem",
     component: Layout,
     children: [
       {
-        path: "personnelApproval",
-        name: "personnelApproval",
-        component: () => import("@/views/personnelApproval"),
-        meta: { title: "入离职审批", icon: "shenpi" },
+        path: "fileSystem",
+        name: "fileSystem",
+        component: () => import("@/views/fileSystem/index"),
+        meta: { title: "文件系统", icon: "form" },
       },
     ],
   },

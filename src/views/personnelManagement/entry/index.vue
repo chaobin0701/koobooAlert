@@ -1,9 +1,13 @@
 <template>
-  <div>
-    <div class="header p-3 shadow-md">
+  <div class="p-3">
+    <div class="header shadow-md pt-3 pb-3">
       <el-button size="mini" type="primary" icon="el-icon-plus" @click="launch"
         >发起入职</el-button
       >
+      <el-button size="mini" icon="el-icon-finished">批量操作</el-button>
+      <el-button size="mini" icon="el-icon-upload2">导出</el-button>
+      <el-button size="mini" icon="el-icon-printer">打印</el-button>
+      <el-button size="mini" icon="el-icon-more">更多操作</el-button>
     </div>
     <!-- 表格 -->
     <entryTable
@@ -17,8 +21,7 @@
       :dislogModel="dislogModel"
       :dialogVisible="dialogVisible"
       @handleClose="handleClose"
-      @createentry="createentry"
-      @fileUpload="fileUpload"
+      @createEntry="createEntry"
       :form="form"
     ></entryDialog>
   </div>
@@ -55,10 +58,11 @@ export default {
         nativePlace: "",
         nation: "",
         idCard: "",
-        brithday: "",
+        birthday: "",
         education: "",
         school: "",
         major: "",
+        entryFile: [],
       },
     };
   },
@@ -83,31 +87,21 @@ export default {
         nativePlace: "",
         nation: "",
         idCard: "",
-        brithday: "",
+        birthday: "",
         education: "",
         graduationSchool: "",
         major: "",
+        entryFile: [],
       };
-      this.FormData = new FormData();
-    },
-    async fileUpload(data) {
-      // 文件上传
-      const { file } = data;
-      file.fileName = file.name;
-      this.param.append("files", file, file.name);
     },
     // 创建一个入职审批
-    async createentry() {
-      Object.keys(this.form).forEach((key) => {
-        this.param.append(key, this.form[key]);
-      });
+    async createEntry() {
       if (this.dislogModel === "create") {
-        await createEntry(this.param);
+        await createEntry(this.form);
       } else {
-        await updateEntry(this.param);
+        await updateEntry(this.form);
       }
       await this.getAllEntryInfo();
-      this.param = new FormData();
       this.dialogVisible = false;
     },
     // 获取信息

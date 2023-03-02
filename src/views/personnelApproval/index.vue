@@ -38,7 +38,7 @@
           <div class="h-full flex flex-col justify-between space-y-3">
             <p class="font-bold text-sm text-gray-600">
               {{
-                `${staffState[item.staffState]}流程-${item.departmentName}-${
+                `${staffState[item.staffState]}流程-${item.name}-${
                   item.position
                 }`
               }}
@@ -72,6 +72,7 @@
       :visible="dialogVisible"
       :before-close="handleClose"
     >
+    {{ form.gender }}1111
       <el-form
         ref="form"
         :model="form"
@@ -100,8 +101,8 @@
         >
           员工信息
         </div>
-        <el-form-item label="性别" prop="gander">
-          <el-input v-model="form.gander"></el-input>
+        <el-form-item label="性别" prop="gender">
+          <el-input v-model="form.gender"></el-input>
         </el-form-item>
 
         <el-form-item label="手机" prop="phone">
@@ -176,12 +177,11 @@ export default {
     },
     approvalHandle(data) {
       const { _id, staffId } = data;
-      console.log(`output->_id,staffId`,_id,staffId)
+      console.log(`output->_id,staffId`, _id, staffId);
     },
     refuseHandle(data) {
       const { _id, staffId } = data;
-      console.log(`output->_id,staffId`,_id,staffId)
-
+      console.log(`output->_id,staffId`, _id, staffId);
     },
   },
   async created() {

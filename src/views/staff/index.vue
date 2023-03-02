@@ -1,93 +1,136 @@
 <template>
-  <div>
+  <div class="p-3">
+    <!-- 功能区 -->
+    <div class="header pb-2 pt-2 shadow-md">
+      <el-button size="mini" icon="el-icon-finished">批量操作</el-button>
+      <el-button size="mini" icon="el-icon-upload2">导入</el-button>
+      <el-button size="mini" icon="el-icon-upload2">导出</el-button>
+      <el-button size="mini" icon="el-icon-printer">打印</el-button>
+      <el-button size="mini" icon="el-icon-more">更多操作</el-button>
+    </div>
     <!-- 数据展示 -->
     <el-table :data="tableData" style="width: 100%" border>
-      <el-table-column type="index" width="50"> </el-table-column>
-      <el-table-column prop="name" label="姓名" width="100"></el-table-column>
-      <el-table-column prop="gender" label="性别" width="100"></el-table-column>
-      <el-table-column
-        prop="birthday"
-        label="出生日期"
-        width="150"
-      ></el-table-column>
-      <el-table-column prop="age" label="年龄" width="100"></el-table-column>
-      <el-table-column
-        prop="departmentName"
-        label="部门"
-        width="150"
-      ></el-table-column>
-      <el-table-column
-        prop="position"
-        label="岗位"
-        width="150"
-      ></el-table-column>
-      <el-table-column
-        prop="departmentManager"
-        label="部门经理"
-        width="150"
-      ></el-table-column>
-      <el-table-column prop="staffState" label="员工状态" width="150">
-        <template slot-scope="scope">
-          {{ staffState[scope.row.staffState] }}
+      <el-table-column prop="name" label="离职日期" width="150">
+        <template slot="header">
+          <i class="el-icon-user-solid"></i>
+          员工姓名
+        </template>
+      </el-table-column>
+      <el-table-column prop="gender" width="150">
+        <template slot="header">
+          <i class="el-icon-user-solid"></i>
+          性别
+        </template>
+      </el-table-column>
+
+      <el-table-column prop="birthday" width="150">
+        <template slot="header">
+          <i class="el-icon-date"></i> 出生日期
+        </template>
+      </el-table-column>
+
+      <el-table-column prop="age" width="150">
+        <template slot="header"> <i class="el-icon-date"></i> 年龄 </template>
+      </el-table-column>
+      <el-table-column prop="departmentName" width="150">
+        <template slot="header">
+          <i class="el-icon-house"></i>
+          部门
+        </template>
+      </el-table-column>
+
+      <el-table-column prop="departmentManager" width="150">
+        <template slot="header">
+          <i class="el-icon-s-custom"></i>
+          部门经理
+        </template>
+      </el-table-column>
+
+      <el-table-column prop="staffState" width="150">
+        <template slot="header">
+          <i class="el-icon-s-custom"></i>
+          员工状态
+        </template>
+      </el-table-column>
+
+      <el-table-column prop="entryFile" width="150">
+        <template slot="header">
+          <i class="el-icon-files"></i>入职信息
+        </template>
+        <template slot-scope="scope" v-if="scope.row.entryFile">
+          <div v-for="file in scope.row.entryFile" :key="file.uid">
+            {{ file.name }}
+          </div>
+        </template>
+      </el-table-column>
+
+      <el-table-column prop="entryDate" width="150">
+        <template slot="header">
+          <i class="el-icon-date"></i>
+          入职日期
+        </template>
+        <template slot-scope="{ row }">
+          {{ $dayjs(row.dateEmployment).format("YYYY-MM-DD") }}
+        </template>
+      </el-table-column>
+
+      <el-table-column prop="phone" width="150">
+        <template slot="header">
+          <i class="el-icon-phone"></i>
+          手机
+        </template>
+      </el-table-column>
+
+      <el-table-column prop="nativePlace" width="150">
+        <template slot="header">
+          <i class="el-icon-s-promotion"></i>
+          籍贯
+        </template>
+      </el-table-column>
+
+      <el-table-column prop="nation" width="150">
+        <template slot="header">
+          <i class="el-icon-s-release"></i>
+          民族
+        </template>
+      </el-table-column>
+
+      <el-table-column prop="idCard" width="150">
+        <template slot="header">
+          <i class="el-icon-s-release"></i>
+          身份证号
+        </template>
+      </el-table-column>
+
+      <el-table-column prop="birthday" width="150">
+        <template slot="header">
+          <i class="el-icon-date"></i> 出生日期
+        </template>
+        <template slot-scope="{ row }">
+          {{ $dayjs(row.dateEmployment).format("YYYY-MM-DD") }}</template
+        ></el-table-column
+      >
+      <el-table-column prop="education" width="150">
+        <template slot="header">
+          <i class="el-icon-success"></i>
+          学历
+        </template>
+      </el-table-column>
+      <el-table-column prop="school" width="150">
+        <template slot="header">
+          <i class="el-icon-school"></i>
+          毕业院校
         </template></el-table-column
       >
-      <el-table-column
-        prop="entryFile"
-        label="入职信息"
-        width="150"
-      ></el-table-column>
-      <el-table-column
-        prop="entryDate"
-        label="入职日期"
-        width="150"
-      ></el-table-column>
-      <el-table-column
-        prop="workingAge"
-        label="入职工龄"
-        width="150"
-      ></el-table-column>
-      <el-table-column
-        prop="departDate"
-        label="离职日期"
-        width="150"
-      ></el-table-column>
-      <el-table-column prop="phone" label="手机" width="150"></el-table-column>
-      <el-table-column
-        prop="nativePlace"
-        label="籍贯"
-        width="150"
-      ></el-table-column>
-      <el-table-column prop="nation" label="民族" width="100"></el-table-column>
-      <el-table-column
-        prop="idCard"
-        label="身份证号码"
-        width="150"
-      ></el-table-column>
-      <el-table-column
-        prop="education"
-        label="学历"
-        width="150"
-      ></el-table-column>
-      <el-table-column
-        prop="school"
-        label="毕业院校"
-        width="150"
-      ></el-table-column>
-      <el-table-column
-        prop="major"
-        label="所学专业"
-        width="150"
-      ></el-table-column>
-      <el-table-column
-        prop="dateForRegular"
-        label="距离转正日期"
-        width="150"
-      ></el-table-column>
-      <el-table-column fixed="right" label="操作" width="100">
+      <el-table-column prop="major" label="所学专业" width="150">
+        <template slot="header">
+          <i class="el-icon-s-cooperation"></i>所学专业
+        </template>
+      </el-table-column>
+
+      <el-table-column label="操作" fixed="right" width="150px">
         <template slot-scope="scope">
-          <el-button size="mini" @click="handleClick(scope.row)"
-            >编辑</el-button
-          >
+          <el-button size="mini" type="primary">查看详情</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -143,8 +186,8 @@
         >
           员工信息
         </div>
-        <el-form-item label="性别" prop="gander">
-          <el-input v-model="form.gander"></el-input>
+        <el-form-item label="性别" prop="gender">
+          <el-input v-model="form.gender"></el-input>
         </el-form-item>
 
         <el-form-item label="手机" prop="phone">
@@ -214,7 +257,7 @@ export default {
     },
     // 编辑员工西悉尼
     handleClick(form) {
-      this.form = {...form};
+      this.form = { ...form };
       this.dialogVisible = true;
     },
     handleClose() {
