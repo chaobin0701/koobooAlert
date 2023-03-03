@@ -10,10 +10,10 @@
     >
       <div class="space-x-3">
         <el-tag>待审批</el-tag>
-        <el-tag>已审批</el-tag>
-        <el-tag>我发起的</el-tag>
-        <el-tag>抄送我的</el-tag>
-        <el-tag>草稿</el-tag>
+        <el-tag type="info">已审批</el-tag>
+        <el-tag type="info">我发起的</el-tag>
+        <el-tag type="info">抄送我的</el-tag>
+        <el-tag type="info">草稿</el-tag>
       </div>
       <span
         class="flex pr-4 pl-4 justify-between items-center border border-gray-200 rounded-full"
@@ -23,7 +23,7 @@
       </span>
     </div>
     <!-- 审批列表 -->
-    <ul class="mt-5">
+    <ul class="mt-5 space-y-2">
       <li
         class="bg-gray-100 flex justify-between items-center rounded-md p-3"
         v-for="item in info"
@@ -37,21 +37,10 @@
           </div>
           <div class="h-full flex flex-col justify-between space-y-3">
             <p class="font-bold text-sm text-gray-600">
-              {{
-                `${staffState[item.staffState]}流程-${item.name}-${
-                  item.position
-                }`
-              }}
+              {{ `入职审批-${item.user_name}-${item.position}` }}
             </p>
             <p class="text-xs text-gray-500">
-              <span class="p-1 bg-gray-200 rounded-full pr-2 pl-2">{{
-                staffState[item.staffState]
-              }}</span>
-              {{
-                `${item.name}  ${$dayjs(item.entryDate).format(
-                  "YYYY-MM-DD"
-                )}  提交`
-              }}
+              {{ $dayjs(item.create_date).format("YYYY-MM-DD") }} 提交
             </p>
           </div>
         </div>
@@ -60,7 +49,7 @@
             class="bg-green-400 border rounded-full pr-2 pl-2 pt-1 pb-1 text-xs font-bold text-white border-gray-600"
             @click="approval(item)"
           >
-            立即审批
+            {{ item.flow_remark }}
           </button>
         </div>
       </li>
@@ -72,7 +61,9 @@
       :visible="dialogVisible"
       :before-close="handleClose"
     >
-    {{ form.gender }}1111
+      <template slot="title">
+        <h3 class="text-xl font-bold">入职流程审批</h3>
+      </template>
       <el-form
         ref="form"
         :model="form"
@@ -80,21 +71,17 @@
         :rules="rules"
         class="grid grid-cols-2"
       >
-        <el-form-item label="转正员工" prop="name">
-          <el-input v-model="form.name"></el-input>
+        <el-form-item label="姓名" prop="name">
+          <el-input v-model="form.user_name"></el-input>
         </el-form-item>
         <el-form-item label="岗位" prop="position">
           <el-input v-model="form.position"></el-input>
         </el-form-item>
         <el-form-item label="入职日期" prop="entryDate">
-          <el-input v-model="form.entryDate"></el-input>
+          <el-input v-model="form.entry_date"></el-input>
         </el-form-item>
         <el-form-item label="部门" prop="departmentName">
-          <el-input v-model="form.departmentName"></el-input>
-        </el-form-item>
-
-        <el-form-item label="部门经理" prop="departmentManager">
-          <el-input v-model="form.departmentManager"></el-input>
+          <el-input v-model="form.dept_name"></el-input>
         </el-form-item>
         <div
           class="header mb-3 p-3 border-b border-t border-opacity-20 border-gray-500 font-bold col-span-2"
@@ -117,8 +104,8 @@
           <el-input v-model="form.nation"></el-input>
         </el-form-item>
 
-        <el-form-item label="身份证号" prop="idCard">
-          <el-input v-model="form.idCard"></el-input>
+        <el-form-item label="身份证号" prop="ID_crad">
+          <el-input v-model="form.ID_crad"></el-input>
         </el-form-item>
 
         <el-form-item label="出生日期" prop="birthday">
@@ -140,11 +127,9 @@
         <el-form-item label="所学专业" prop="major">
           <el-input v-model="form.major"></el-input>
         </el-form-item>
-        <div>
-          <el-button size="mini" type="primary" @click="approvalHandle(form)"
-            >同意</el-button
-          >
-          <el-button size="mini" @click="refuseHandle(form)">拒绝</el-button>
+        <div class="mb-3 mt-3">
+          <el-button type="primary" @click="auditHandle(form)">同意</el-button>
+          <el-button @click="refuseHandle(form)">拒绝</el-button>
         </div>
       </el-form>
     </el-dialog>
@@ -152,14 +137,13 @@
 </template>
 
 <script>
-import { getAllEntryInfo } from "@/api/entry.js";
-import { staffState } from "@/utils/map";
-import { approval, refuse } from "@/api/examine";
+import { getAllEntryInfo, entryHandler } from "@/api/entry.js";
+import { userState } from "@/utils/map";
 export default {
   data: () => {
     return {
       info: [],
-      staffState,
+      userState,
       dialogVisible: false, //控制弹窗显示
       form: {},
       rules: {},
@@ -167,7 +151,7 @@ export default {
   },
   methods: {
     approval(data) {
-      const { _id, staffId } = data;
+      const { _id, userId } = data;
       this.dialogVisible = true;
       this.form = { ...data };
     },
@@ -175,17 +159,35 @@ export default {
       this.form = {};
       this.dialogVisible = false;
     },
-    approvalHandle(data) {
-      const { _id, staffId } = data;
-      console.log(`output->_id,staffId`, _id, staffId);
+    auditHandle(data) {
+      // 通过审批，流程进入下一阶段。
+      let { _id, current_node, flow_no } = data;
+      entryHandler({ _id, current_node, flow_no, result: "success" });
     },
     refuseHandle(data) {
-      const { _id, staffId } = data;
-      console.log(`output->_id,staffId`, _id, staffId);
+      // 拒绝审批，流程中断
+      let { _id, current_node, flow_no } = data;
+      entryHandler({ _id, current_node, flow_no, result: "refuse" });
     },
+  },
+  computed: {
+    auditStage() {},
   },
   async created() {
     this.info = await getAllEntryInfo();
+
+    // 计算当前审批的进度
+    this.info.forEach((item) => {
+      // 获取当前id
+      let node_id = item.current_node;
+      // 查询与当前id配对的流程点
+      let result = item.flow_line.find((flow) => {
+        return flow.next_node_id === node_id;
+      });
+      item.flow_remark = result.remark;
+      // 输出一下
+      // console.log(`output->result`,result)
+    });
   },
 };
 </script>

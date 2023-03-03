@@ -80,13 +80,13 @@ export const constantRoutes = [
   },
 
   {
-    path: "/staff",
+    path: "/user",
     component: Layout,
     children: [
       {
-        path: "staff",
-        name: "staff",
-        component: () => import("@/views/staff/index"),
+        path: "user",
+        name: "user",
+        component: () => import("@/views/user/index"),
         meta: { title: "员工管理", icon: "user" },
       },
     ],

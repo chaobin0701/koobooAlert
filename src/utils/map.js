@@ -1,4 +1,4 @@
-export const staffState = {
+export const userState = {
   0: "入职审批",
   1: "实习",
   2: "转正审批",

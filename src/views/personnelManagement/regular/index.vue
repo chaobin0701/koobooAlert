@@ -126,7 +126,7 @@
     >
       <el-form ref="form" :model="form" label-width="80px" :rules="rules">
         <el-form-item label="转正员工">
-          <el-input type="text" v-model="form.regularStaff"></el-input>
+          <el-input type="text" v-model="form.regularuser"></el-input>
         </el-form-item>
         <el-form-item label="转正说明">
           <el-input type="text" v-model="form.regularIllustrate"></el-input>
@@ -144,7 +144,7 @@ export default {
       tableData: [
         {
           name: "2",
-          staff: "",
+          user: "",
           station: "",
           department: "",
           departmentManager: "",
@@ -154,7 +154,7 @@ export default {
           phoneNumber: "",
           nativePlace: "",
           nation: "",
-          idCard: "",
+          ID_crad: "",
           birthday: "",
           education: "",
           graduationSchool: "",
@@ -164,7 +164,7 @@ export default {
         },
         {
           name: "1",
-          staff: "",
+          user: "",
           station: "",
           department: "",
           departmentManager: "",
@@ -174,7 +174,7 @@ export default {
           phoneNumber: "",
           nativePlace: "",
           nation: "",
-          idCard: "",
+          ID_crad: "",
           birthday: "",
           education: "",
           graduationSchool: "",
@@ -184,7 +184,7 @@ export default {
         },
       ],
       form: {
-        regularStaff: "张三", //转正员工
+        regularuser: "张三", //转正员工
         regularIllustrate: "干得不错", //转正说明
       },
       rules: {},

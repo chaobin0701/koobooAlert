@@ -1,31 +1,30 @@
 import request from "@/utils/request";
-// 待办事项处理
-export function getTodoList(params) {
+
+export function getAlluserInfo() {
   return request({
-    url: "api/todo",
+    url: "api/hr/user",
     method: "get",
-    params,
   });
 }
-export function addTodoList(data) {
+export function adduserOne(data) {
   return request({
-    url: "api/todo",
+    url: "api/hr/user",
     method: "post",
     data,
   });
 }
-export function removeTodoList(_id) {
+export function removeuserOne(_id) {
   return request({
-    url: "api/todo",
+    url: "api/hr/user",
     method: "delete",
     data: {
       _id,
     },
   });
 }
-export function updateTodoList(data) {
+export function updateuserOne(data) {
   return request({
-    url: "api/todo",
+    url: "api/hr/user",
     method: "put",
     data,
   });

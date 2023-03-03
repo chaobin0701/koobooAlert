@@ -121,7 +121,7 @@ export default {
           dateEmployment: "",
           processState: "",
           departFile: "",
-          departStaff: "",
+          departuser: "",
           departDate: "",
           launchDate: "",
           departCause: "",

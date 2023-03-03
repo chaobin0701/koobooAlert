@@ -40,58 +40,28 @@ import {
 export default {
   data: () => {
     return {
-      dialogVisible: false,
-      param: new FormData(),
-      deps: [],
-      tableData: [],
-      dislogModel: "",
+      dialogVisible: false, // 控制弹窗显示
+      tableData: [], //入职信息
+      dislogModel: "", //弹窗处理的事项 edit or create
+      // 表单对象
       form: {
-        // 入职信息
-        name: "",
-        departmentId: "",
-        station: "",
-        entryDate: "",
-        probation: "",
-        gender: "",
-        // 员工信息
-        phone: "",
-        nativePlace: "",
-        nation: "",
-        idCard: "",
-        birthday: "",
-        education: "",
-        school: "",
-        major: "",
-        entryFile: [],
+        userInfo: {},
       },
     };
   },
   components: { entryTable, entryDialog },
   methods: {
+    // 发起入职
     async launch() {
       this.dialogVisible = true;
       this.dislogModel = "create";
     },
+    // 关闭弹窗
     async handleClose() {
       this.dialogVisible = false;
       this.form = {
-        // 入职信息
-        name: "",
-        department: "",
-        station: "",
-        dateEmployment: "",
-        probation: "",
-        // 员工信息
-
-        phoneNumber: "",
-        nativePlace: "",
-        nation: "",
-        idCard: "",
-        birthday: "",
-        education: "",
-        graduationSchool: "",
-        major: "",
-        entryFile: [],
+        entry_files: [],
+        userInfo: {},
       };
     },
     // 创建一个入职审批
@@ -116,8 +86,8 @@ export default {
       this.dialogVisible = true;
     },
     // 删除
-    async handleDelete({ _id, staffId }) {
-      await removeEntry({ _id, staffId });
+    async handleDelete({ _id, userId }) {
+      await removeEntry({ _id, userId });
       await this.getAllEntryInfo();
     },
   },

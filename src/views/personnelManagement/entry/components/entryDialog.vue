@@ -7,7 +7,8 @@
       </h3>
       <h3 class="text-xl font-bold" v-else>修改信息</h3>
     </template>
-    <!-- 表单 -->
+    <!-- 入职信息 -->
+
     <el-form
       ref="form"
       :model="form"
@@ -18,14 +19,13 @@
       <div class="col-span-2 pb-2 pt-2 border-b mb-2">
         <h3 class="text-l pl-3 font-bold text-blue-400">入职信息</h3>
       </div>
-      <el-form-item label="员工姓名" prop="name" class="col-span-2">
-        <el-input v-model="form.name"></el-input>
+      <el-form-item label="员工姓名" prop="user_name" class="col-span-2">
+        <el-input v-model="form.user_name"></el-input>
       </el-form-item>
-
       <el-form-item label="入职部门" prop="departmentId">
-        <el-select v-model="form.departmentId" class="w-full">
+        <el-select v-model="form.dept_id" class="w-full">
           <el-option
-            :label="item.departmentName"
+            :label="item.dept_name"
             :value="item._id"
             v-for="(item, index) in deps"
             :key="index"
@@ -36,18 +36,18 @@
       <el-form-item label="入职岗位" prop="position">
         <el-input v-model="form.position"></el-input>
       </el-form-item>
-      <el-form-item label="入职日期" prop="entryDate">
+      <el-form-item label="入职日期" prop="entry_date">
         <el-date-picker
-          v-model="form.entryDate"
+          v-model="form.entry_date"
           type="date"
           placeholder="选择日期"
         >
         </el-date-picker>
       </el-form-item>
-      <el-form-item label="试用期" prop="probation">
-        <el-input type="text" v-model="form.probation">
-          <template slot="append">天</template></el-input
-        >
+      <el-form-item label="试用期" prop="probation_period">
+        <el-input type="text" v-model="form.probation_period">
+          <template slot="append">天</template>
+        </el-input>
       </el-form-item>
 
       <el-form-item class="col-span-2" label="入职资料">
@@ -56,11 +56,20 @@
           :on-remove="handleRemove"
           :on-success="uploadSuccess"
           multiple
-          :file-list="form.entryFile"
+          :file-list="form.entry_files"
         >
           <el-button size="small" type="primary">点击上传</el-button>
         </el-upload>
       </el-form-item>
+    </el-form>
+    <!-- 员工信息 -->
+    <el-form
+      ref="form"
+      :model="form"
+      label-width="80px"
+      :rules="rules"
+      class="grid grid-cols-2"
+    >
       <div class="col-span-2 pb-2 pt-2 border-b mb-2">
         <h3 class="text-l pl-3 font-bold text-green-400">员工信息</h3>
       </div>
@@ -81,7 +90,7 @@
         <el-input type="text" v-model="form.nation"></el-input>
       </el-form-item>
       <el-form-item label="身份证号">
-        <el-input type="text" v-model="form.idCard"></el-input>
+        <el-input type="text" v-model="form.ID_crad"></el-input>
       </el-form-item>
 
       <el-form-item label="出生日期" prop="birthday">
@@ -119,18 +128,19 @@ export default {
   data: () => {
     return {
       rules: {
-        name: [{ required: true, message: "请输入名字", trigger: "blur" }],
+        user_name: [{ required: true, message: "请输入名字", trigger: "blur" }],
         departmentId: [
           { required: true, message: "请输入部门", trigger: "blur" },
         ],
         position: [{ required: true, message: "请输入岗位", trigger: "blur" }],
-        entryDate: [
+        entry_date: [
           { required: true, message: "输入入职日期", trigger: "blur" },
         ],
-        probation: [
+        probation_period: [
           { required: true, message: "请输入试用期", trigger: "blur" },
         ],
       },
+      test: "",
       deps: [],
       fileList: [], //上传文件列表
     };
@@ -151,18 +161,15 @@ export default {
     },
     // 文件上传成功的狗子
     uploadSuccess(file, fileList) {
-      if (!this.form.entryFile) {
-        this.form.entryFile = [];
-      }
-      this.form.entryFile.push({
-        name: fileList.name,
-        size: fileList.size,
-        status: fileList.status,
-        uid: fileList.uid,
+      console.log(`output->fileList`, fileList);
+      this.form.entry_files.push({
+        name: fileList.response.FullName,
+        size: fileList.response.Size,
+        absoluteUrl: fileList.response.AbsoluteUrl,
       });
     },
     handleRemove(file, fileList) {
-      this.form.entryFile = fileList;
+      this.form.entry_files = fileList;
     },
   },
   async created() {

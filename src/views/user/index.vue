@@ -10,7 +10,7 @@
     </div>
     <!-- 数据展示 -->
     <el-table :data="tableData" style="width: 100%" border>
-      <el-table-column prop="name" label="离职日期" width="150">
+      <el-table-column prop="user_name" width="150">
         <template slot="header">
           <i class="el-icon-user-solid"></i>
           员工姓名
@@ -22,49 +22,22 @@
           性别
         </template>
       </el-table-column>
-
       <el-table-column prop="birthday" width="150">
         <template slot="header">
           <i class="el-icon-date"></i> 出生日期
         </template>
       </el-table-column>
-
       <el-table-column prop="age" width="150">
         <template slot="header"> <i class="el-icon-date"></i> 年龄 </template>
       </el-table-column>
-      <el-table-column prop="departmentName" width="150">
+      <el-table-column prop="dept_name" width="150">
         <template slot="header">
           <i class="el-icon-house"></i>
           部门
         </template>
       </el-table-column>
 
-      <el-table-column prop="departmentManager" width="150">
-        <template slot="header">
-          <i class="el-icon-s-custom"></i>
-          部门经理
-        </template>
-      </el-table-column>
-
-      <el-table-column prop="staffState" width="150">
-        <template slot="header">
-          <i class="el-icon-s-custom"></i>
-          员工状态
-        </template>
-      </el-table-column>
-
-      <el-table-column prop="entryFile" width="150">
-        <template slot="header">
-          <i class="el-icon-files"></i>入职信息
-        </template>
-        <template slot-scope="scope" v-if="scope.row.entryFile">
-          <div v-for="file in scope.row.entryFile" :key="file.uid">
-            {{ file.name }}
-          </div>
-        </template>
-      </el-table-column>
-
-      <el-table-column prop="entryDate" width="150">
+      <!-- <el-table-column prop="entryDate" width="150">
         <template slot="header">
           <i class="el-icon-date"></i>
           入职日期
@@ -72,7 +45,7 @@
         <template slot-scope="{ row }">
           {{ $dayjs(row.dateEmployment).format("YYYY-MM-DD") }}
         </template>
-      </el-table-column>
+      </el-table-column> -->
 
       <el-table-column prop="phone" width="150">
         <template slot="header">
@@ -80,28 +53,24 @@
           手机
         </template>
       </el-table-column>
-
       <el-table-column prop="nativePlace" width="150">
         <template slot="header">
           <i class="el-icon-s-promotion"></i>
           籍贯
         </template>
       </el-table-column>
-
       <el-table-column prop="nation" width="150">
         <template slot="header">
           <i class="el-icon-s-release"></i>
           民族
         </template>
       </el-table-column>
-
-      <el-table-column prop="idCard" width="150">
+      <el-table-column prop="ID_crad" width="150">
         <template slot="header">
           <i class="el-icon-s-release"></i>
           身份证号
         </template>
       </el-table-column>
-
       <el-table-column prop="birthday" width="150">
         <template slot="header">
           <i class="el-icon-date"></i> 出生日期
@@ -127,7 +96,6 @@
           <i class="el-icon-s-cooperation"></i>所学专业
         </template>
       </el-table-column>
-
       <el-table-column label="操作" fixed="right" width="150px">
         <template slot-scope="scope">
           <el-button size="mini" type="primary">查看详情</el-button>
@@ -154,8 +122,8 @@
           <el-input v-model="form.position"></el-input>
         </el-form-item>
 
-        <el-form-item label="员工状态" prop="staffState">
-          <el-input v-model="form.staffState"></el-input>
+        <el-form-item label="员工状态" prop="userState">
+          <el-input v-model="form.userState"></el-input>
         </el-form-item>
 
         <el-form-item label="入职信息" prop="entryFile">
@@ -202,8 +170,8 @@
           <el-input v-model="form.nation"></el-input>
         </el-form-item>
 
-        <el-form-item label="身份证号" prop="idCard">
-          <el-input v-model="form.idCard"></el-input>
+        <el-form-item label="身份证号" prop="ID_crad">
+          <el-input v-model="form.ID_crad"></el-input>
         </el-form-item>
 
         <el-form-item label="出生日期" prop="birthday">
@@ -235,10 +203,9 @@
 </template>
 
 <script>
-import { getAllStaffInfo } from "@/api/staff";
-import { staffState } from "@/utils/map";
+import { getAlluserInfo } from "@/api/userInfo";
+import { userState } from "@/utils/map";
 export default {
-  name: "TodoList",
   data() {
     return {
       tableData: [], //表格数据
@@ -246,13 +213,13 @@ export default {
       form: {},
       formLabelAlign: {},
       formState: "",
-      staffState,
+      userState,
       rules: {},
     };
   },
   methods: {
-    async getAllStaffInfo() {
-      const res = await getAllStaffInfo();
+    async getAlluserInfo() {
+      const res = await getAlluserInfo();
       this.tableData = res;
     },
     // 编辑员工西悉尼
@@ -272,7 +239,7 @@ export default {
     beforeClose() {},
   },
   created: async function () {
-    await this.getAllStaffInfo();
+    await this.getAlluserInfo();
   },
 };
 </script>

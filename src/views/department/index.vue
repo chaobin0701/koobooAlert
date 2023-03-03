@@ -16,22 +16,23 @@
     </div>
     <!-- 表格数据 -->
     <el-table :data="tableData" border stripe>
-      <el-table-column prop="departmentName" width="250px">
+      <el-table-column prop="dept_name" width="250px">
         <template slot="header">
           <i class="el-icon-house"></i>
           部门
         </template>
         <template slot-scope="{ row }">
-          <el-tag type="info">{{ row.departmentName }}</el-tag>
+          <el-tag>{{ row.dept_name }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="departmentManager" width="250px">
+      <el-table-column prop="name" width="250px">
         <template slot="header">
           <i class="el-icon-s-custom"></i>
           部门经理
         </template>
         <template slot-scope="{ row }">
-          <el-tag>{{ row.departmentManager }}</el-tag>
+          <el-tag v-if="row.name">{{ row.name }}</el-tag>
+          <span class="text-gray-400">未指定部门经理</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" width="250px">
@@ -55,11 +56,11 @@
         label-width="100px"
         class="demo-ruleForm"
       >
-        <el-form-item label="部门" prop="departmentName">
-          <el-input v-model="ruleForm.departmentName"></el-input>
+        <el-form-item label="部门" prop="dept_name">
+          <el-input v-model="ruleForm.dept_name"></el-input>
         </el-form-item>
-        <el-form-item label="部门经理" prop="departmentManager">
-          <el-input v-model="ruleForm.departmentManager"></el-input>
+        <el-form-item label="部门经理" prop="name">
+          <el-input v-model="ruleForm.name"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm('depForm')"
@@ -76,22 +77,22 @@
 import {
   getAllDepartment,
   createDepartment,
-  removeStaffOne,
-  updateStaffOne,
+  removeuserOne,
+  updateuserOne,
 } from "@/api/department";
 export default {
   data: () => {
     return {
       dialogVisible: false,
       ruleForm: {
-        departmentName: "",
-        departmentManager: "",
+        dept_name: "",
+        name: "",
       },
       rules: {
-        departmentName: [
+        dept_name: [
           { required: true, message: "请输入部门名称", trigger: "blur" },
         ],
-        departmentManager: [
+        name: [
           { required: true, message: "请输入部门经理名称", trigger: "blur" },
         ],
       },
@@ -123,8 +124,8 @@ export default {
     resetForm() {
       // 初始化
       this.ruleForm = {
-        departmentName: "",
-        departmentManager: "",
+        dept_name: "",
+        name: "",
       };
     },
   },
